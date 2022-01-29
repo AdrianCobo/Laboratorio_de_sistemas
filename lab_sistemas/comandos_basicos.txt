@@ -1,0 +1,368 @@
+Las páginas de manual se pueden consultar con el comando
+man: man sección asunto
+Por ejemplo: man 1 gcc
+Secciones de interés: comandos (1), llamadas al sistema(2),
+llamadas a biblioteca(3).
+Para buscar sobre una palabra: apropos.
+Por ejemplo: apropos gcc.Intro
+Estructura del sistema
+Uso básico del sistema
+Comandos básicos
+cd: cambia de directorio actual.
+echo: escribe sus argumentos por su salida.
+touch: cambia la fecha de modificación de un fichero. Si no
+existe el fichero, se crea.
+ls: lista el contenido de un directorio.
+cp: copia ficheros.
+mv: mueve ficheros.
+rm: borra ficheros.
+mkdir: crea directorios.
+rmdir: borra directorios vacı́os.
+date: muestra la fecha.Intro
+Estructura del sistema
+Uso básico del sistema
+Comandos básicos
+who: muestra los usuarios que están en el sistema.
+whoami: muestra tu nombre de usuario.
+sort: ordena las lı́neas de un fichero.
+wc: cuenta caracteres, palabras y lı́neas de ficheros.
+fgrep, grep: buscan cadenas dentro de ficheros.
+cmp, diff: comparan ficheros.
+cat: escribe en su salida el contenido de uno o varios ficheros.
+less: permite leer un fichero de texto en el terminal usando
+scroll.Intro
+Estructura del sistema
+Uso básico del sistema
+Comandos básicos
+file: da pistas sobre el contenido de un fichero.
+od: escribe en su salida el los datos de un fichero en distintos
+formatos.
+head, tail: escriben el las primeras/últimas lı́neas del
+fichero en su salida.
+tar: crea un fichero con múltiples ficheros dentro
+(comprimidos o no).
+gzip/gunzip: comprime/descomprime un fichero.
+top: muestra los procesos y el estado de sistema.
+reset: restablece el estado del terminal.
+exit: el shell termina su ejecución.
+
+Globbing (wildcards): caracteres especiales para el shell que sirven
+para hacer referencia a nombres de ficheros:
+? cualquier carácter.
+* cualquier secuencia de caracteres.
+[ab] cualquiera de los caracteres que están dentro de los
+corchetes (letra a o la letra b en el ejemplo).
+[b-z] cualquier carácter que se encuentre entre esas dos (de la
+letra b a la z en el ejemplo).
+Para escribir caracteres especiales sin que haya sustitución:
+’ ’ las comillas simples escapan todo lo que tienen dentro (ya
+no tienen un significado especial).
+” ” las comillas dobles escapan todo menos algunas
+sustituciones (p. ej. las variables de entorno).
+
+El comando test sirve para comprobar condiciones de distinto
+tipo.
+Ficheros:
+-f fichero
+si existe el fichero
+-d dir
+si existe el directorio
+
+Cadenas:
+-n String1
+si la longitud de la string no es cero
+-z String1
+si la longitud de la string es cero
+String1 = String2
+si son iguales
+String1 != String2
+String1 and String2 variables no son idénticas
+String1
+si la string no es nula
+
+Enteros:
+Integer1 -eq Integer2
+si los enteros Integer1 e Integer2 son iguales.
+Otros operadores:
+-ne: not equal
+-gt: greater than
+-ge: greater or equal
+-lt: less than
+-le: less or equal
+
+Test también se puede usar ası́:
+Esto:
+[
+$ a -eq $ b
+]
+es lo mismo que esto:
+test $ a -eq $ b
+
+Para operaciones básicas con enteros podemos usar el propio shell.
+También podemos usar el comando bc.
+Esto:
+$ ((5 + 7))
+se reemplaza por
+12
+
+sort
+ordena las lı́neas de varias formas.
+uniq
+elimina lı́neas contiguas repetidas.
+tail
+muestra las últimas lı́neas.
+P. ej:
+$ ps | tail +3
+$ ps | tail -3
+$ seq 1 1000 |
+$ seq 1 1000 |
+# a partir de la 3 a
+# las 3 ultimas
+sort
+sort -n
+
+Sort
+Puede recibir una lista de columnas (empezando por la 1)
+Y un separador
+Y ordena por esos campos como clave (es un intervalo de
+campos)
+Ojo con estabilidad (-s)
+
+diff
+compara ficheros de texto lı́nea a lı́nea
+cmp
+compara ficheros binarios byte a byte
+
+Traduce caracteres. El primer argumento es el conjunto de
+caracteres a traducir. El segundo es el conjunto al que se
+traducen. El enésimo carácter del primer conjunto se traduce
+por el enésimo carácter del segundo.
+-d
+Borra los caracteres del único conjunto que se le pasa como
+argumento.
+Se le pueden dar rangos, p. ej.
+$ cat fichero | tr a-z A-Z
+Expresiones regulares (regexp)
+.
+encaja con cualquier carácter, por ejemplo ’a’.
+[conjunto]
+encaja con cualquier carácter en el conjunto, por ejemplo
+[abc] encaja con ’a’. Se pueden especificar rangos, p. ej.
+[a-zA-Z].
+[ˆconjunto]
+encaja con cualquier carácter que no esté en el conjunto, por
+ejemplo [ˆabc] NO encaja con ’a’, sin embargo sı́ encaja
+con ’z’.
+
+ˆ
+encaja con principio de lı́nea.
+$
+encaja con final de lı́nea.
+Una regexp e 1 concatenada a otra regexp e 2 , e 1 e 2 , encaja con
+una string si una parte p 1 de la string encaja con e 1 y otra
+parte contigua, p 2 , encaja con e 2 .
+exp*
+encaja si aparece cero o más veces la regexp que lo precede.
+exp+
+encaja si aparece una o más veces la regexp que lo precede.
+
+Podemos ver los permisos con el comando ls -l. Si los
+queremos ver del directorio y no de las entradas: -d.
+
+exp?
+encaja si aparece cero o una vez la regexp que lo precede. Se
+utiliza para partes opcionales.
+(exp)
+agrupa expresiones regulares.
+exp | exp
+si encaja con alguna de las regexp que están separadas por la
+barras
+\
+carácter de escape: hace que el sı́mbolo pierda su significado
+especial.
+P. ej:
+’aass’ encaja con la regexp (aass|booo)
+’hola*’ encaja con la regexp a\*
+
+Filtra lı́neas usando expresiones regulares.
+-v
+Realiza lo inverso: imprime las lı́neas que no encajan.
+-n
+Indica el número de lı́nea.
+-e
+indica que el siguiente argumento es una expresión.
+-q
+silencioso, no saca nada por la salida (cuando solo nos
+interesa el status de salida).
+
+Es un editor: aplica el comando de sed a cada lı́nea que lee y
+escribe el resultado por su salida. Sin el modificador -n,
+escribe todas las lı́neas después de procesarlas.
+Si queremos usar expresiones regulares extendidas, hay que
+usar la opción -E.
+Comandos:
+q → Sale del programa.
+d → Borra la lı́nea.
+p → Imprime la lı́nea. (correr con -n)
+r → Lee e inserta un fichero.
+s → Sustituye. ← la que más se usa!!!
+
+Direcciones:
+número → actúa sobre esa lı́nea.
+/regexp/ → lı́neas que encajan con la regexp.
+$ → la última lı́nea.
+Se pueden usar intervalos:
+número,número → actúa en ese intervalo.
+número, $ → desde la lı́nea número hasta la última.
+número,/regexp/ → desde la lı́nea número hasta la primera
+que encaje con regexp.
+
+Ejemplos:
+sed -E ’3,6d’ → borra las lı́neas de la 3 a la 6
+sed -E -n ’/BEGIN|begin/,/END|end/p’ → imprime las
+lı́neas entre esas regexp
+sed -E ’3q’ → imprime las 3 primeras lı́neas.
+sed -E -n ’13, $ p’ → imprime desde la lı́nea 13 hasta la última.
+sed -E ’/[Hh]ola/d’ → borra las lı́neas que contienen ’Hola’ u
+’hola’.
+Sustitución
+sed -E ’s/regexp/sustitución/’ → sustituye la primero
+subcadena que encaja con la exp. por la cadena sustitución.
+sed -E ’s/regexp/sustitución/g’ → sustituye todas
+las subcadenas de la lı́nea que encajan con la exp. por la
+cadena sustitución.
+Ejemplos
+sed -E ’s/[O-9]/X/’ → el primer dı́gito de la lı́nea se sustituye
+por una X.
+sed -E ’s/[O-9]/X/g’ → todos los dı́gitos de la lı́nea se
+sustituyen por una X.
+sed -E ’s/ˆ([A-Za-z]+)[ ]+([0-9]+)/NOMBRE:\1 NOTA:\2/g’ →
+añade NOMBRE: y NOTA: delante de los nombres y notas (ojo, no
+funciona con acentos, guiones, nombres con espacios. . . )
+
+AWK
+Imprimir:
+print
+Sentencia que imprime los operandos. Si se separan con
+comas, inserta un espacio. Al final imprime un salto de lı́nea.
+printf()
+Función que imprime, ofrece control sobre el formato de forma
+similar a la función de libc para C:
+$ ls -l | awk ’{ printf("Size: %08d KBytes\n", $ 5) }’
+
+Variables:
+$ 0
+La lı́nea que está procesando.
+$ 1, $ 2 ...
+El primer, segundo... campo de la lı́nea.
+NR
+Número del registro (lı́nea) que se está procesando.
+Ejemplo
+para imprimir la tercera y segunda columna de un csv:
+
+$ cat a.txt|awk -F, ’{printf("%d %d",
+$3, $2)}’
+
+Variables:
+NF
+Número del campos del registro que se está procesando.
+var=contenido
+Se pueden declarar variables dentro del programa. Con el
+modificador -v se pueden pasar variables al programa.
+$ ls -l | awk ’
+{
+size= $ 5 ; printf("Size: %08d KBytes\n", size)
+}’
+
+patrón { programa }
+Actuando sólo en unas lı́neas, que se ajustan a un patrón, que
+puede ser:
+Expresión regular
+Se procesan las lı́neas que encajen con la regexp.
+$ ls -l | awk ’/[Dd]esktop/{ print $ 1 }’
+$ ls -l | awk ’ $ 1 ~
+/[Dd]esktop/ { print $ 1 }’
+
+Expresión de relación
+Se comparan valores y se evalúa la expresión.
+$ ls -l | awk ’ NR >= 5 && NR <= 10 { print $ 1 }’
+
+Recorrer un árbol
+Para recorrese un árbol de ficheros
+du -a .
+find .
+
+Join
+join
+Extremadamente útil
+Hace un join relacional de dos columnas (tienen que estar
+ordenadas)
+$ echo ’
+a bla
+b ble
+c blo’ > a.txt
+$ echo ’
+a ta
+b te
+c to’ > b.txt
+$ join a.txt b.txt
+a bla ta
+b ble te
+c blo to
+
+join quita las que no están en alguno de los dos (inner join)
+Tienen que estar ordenadas, usar sort antes
+Igual que sort puede usar diferentes campos
+
+Sirve para usar como argumentos en la ejecución de otro
+comando lo que viene por la entrada estándar.
+$ echo a b c | xargs
+-rw-rw-r-- 1 esoriano
+-rw-rw-r-- 1 esoriano
+-rw-rw-r-- 1 esoriano
+ls -l
+esoriano 2 mar
+esoriano 2 mar
+esoriano 2 mar
+
+ls -i listar inodos
+
+ln y ln -s para crear enlaces blandos
+
+ps
+ps lista los procesos del sistema.
+Comúnmente se ejecuta con los modificadores aux: mostrar
+todos los procesos.
+Hay muchos otros modificadores para mostrar distintas
+columnas, hilos de los procesos, etc.
+
+top
+top muestra los procesos refrescando sus datos.
+Es útil para ver el consumo de CPU y de memoria de los
+procesos.
+Las filas se pueden ordenar de distinta forma.
+Pulsando h (también ?) nos ofrece algunas de las opciones
+interactivas. Se sale pulsando q.
+Por ejemplo: P ordena por uso de CPU, M ordena por consumo
+de memoria, etc.
+Hay alternativas más fáciles de usar, como htop.
+
+lsof
+lsof muestra los ficheros que tienen abiertos los procesos.
+Como ya sabemos, hay ficheros de múltiples tipos (sockets,
+pipes, etc.).
+Por omisión nos muestra columnas con el comando, PID,
+usuario, descriptor de fichero, tipo, dispositivo que lo sirve,
+tamaño, posición y nombre del fichero.
+
+Versiones
+Una versión tiene cuatro números: A.B.C.D (p. ej. 4.8.17.2):
+A es el número de versión. Se cambia muy poco, solo cuando
+hay cambios muy importantes.
+B es el número mayor (major) de revisión.
+C es el número menor (minor) de revisión, se incrementa
+cuando se mete alguna cosa nueva (driver, etc.).
+D es el de corrección, cuando se aplica un parche para arreglar
+algo.
+En ocasiones se añaden unas letras como rc1 (release
+candidate 1), etc.

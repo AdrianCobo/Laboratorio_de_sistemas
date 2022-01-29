@@ -1,0 +1,139 @@
+sed:
+
+Existen cuatro tipos de substituciones:
+
+    g, reemplazar todas las ocurrencias.
+    A número, el número de ocurrencia para el texto nuevo que quieres sustituir.
+    p, imprimir el contenido original.
+    w file: significa que debe escribir los resultados a un archivo.
+
+Puedes limitar el reemplazamiento al especificar el número de ocurrencias que deben ser reemplazados de la siguiente forma:
+
+$ sed 's/test/another test/2' myfile
+
+La bandera g significa global, esto indica que es un reemplazamiento global de todas las ocurrencias:
+$ sed 's/test/another test/g' myfile
+
+La bandera p imprime cada línea que contiene un patrón de coincidencia, puedes utilizar la opción –n para imprimir solo las líneas modificadas.
+
+$ cat myfile
+
+$ sed -n 's/test/another test/p' myfile
+
+imprime solo las lineas que contienen ese patron y sin repetir lineas
+cat texto|sed  -E -n '/hola/p
+
+La bandera w guarda la salida a un archive especificado:
+
+$ sed 's/test/another test/w output' myfile
+
+Limitando el sed
+
+El comando sed procesa tu archive entero. Sin embargo, puedes limitar el comando sed para que procese líneas en específico, existen dos maneras:
+
+    Un rango de líneas.
+    Un patrón que coincide con una línea en específico.
+
+Puedes escribir un numero para eliminar a una cantidad de líneas en específico:
+
+$ sed '2s/test/another test/' myfile
+imprimir las dos primeras lineas si coinciden con el patron y no hacer sustituciones
+cat texto|sed  -E -n '2s/hola/&/p'
+
+Solo la linea 2 modificadas.
+
+Ahora intentemos utilizar un rango de líneas:
+
+$ sed '2,3s/test/another test/' myfile
+
+Además, podemos empezar desde una línea hasta el fin de archivo
+
+$ sed '2,$s/test/another test/' myfile
+
+O puedes utilizar un patrón como el siguiente: si la linea contiene la frase likegeeks se sustituye
+
+$ sed '/likegeeks/s/bash/csh/' /etc/passwd
+
+Eliminar Líneas
+
+Para eliminar líneas, la bandera (d) es tu amiga.
+
+La bandera elimina el texto del flujo de datos, pero no del archivo original.
+
+$ sed '2d' myfile
+Aquí eliminamos la segunda línea solo de myfile.
+
+¿Qué tal si eliminamos rangos de líneas?
+
+$ sed '2,3d' myfile
+
+Aquí eliminamos rangos de líneas, en este caso la segunda y la tercera.
+
+Otros tipos de rangos:
+
+$ sed '3,$d' myfile
+Aquí podemos observar como eliminamos desde la tercera línea hasta el final del archive.
+
+
+Todos estos ejemplos nunca modifican tu archivo original.
+
+$ sed '/test 1/d' myfile
+Ahora en este caso utilizamos un patrón para eliminar la línea si coincide con la primera línea.
+
+Si necesitas eliminar un rango de líneas, puedes utilizar dos patrones como los siguientes:
+
+$ sed '/second/,/fourth/d' myfile
+Desde la segunda a la cuarta línea fueron eliminadas.
+
+Insertar y Agregar texto
+
+Puedes insertar o agregar líneas de texto utilizando las siguientes banderas:
+
+    La bandera (i).
+    La bandera (a).
+
+$ echo "Another test" | sed 'i\First test '
+
+Con esto el texto pes añadido antes de la línea especificada.
+
+$ echo "Another test" | sed 'a\First test '
+Al contrario, con este otro comando que añade el texto después de la línea especificada.
+
+¿Bueno, y como logramos añadir texto en el medio?
+
+Fácil, observa este ejemplo:
+sed '2i\This is the inserted line.' myfile
+
+Y el agregar funciona de la misma forma, pero mira en donde se posiciona el texto agregado:
+
+$ sed '2a\This is the appended line.' myfile pero en este caso se añade despues de la linea 2
+Modificando Líneas
+
+Para modificar una línea en específico, puedes utilizar la bandera (c) de la siguiente forma:
+
+$ sed '3c\This is a modified line.' myfile
+Puedes utilizar un patrón de expresiones regulares, con lo que todas las líneas que coincidan con la expresión serán modificadas.
+
+$ sed '/This is/c Line updated.' myfile
+
+Transformar Caracteres
+
+La bandera de transformación (y) funciona en los caracteres de la siguiente forma:
+
+$ sed 'y/123/567/' myfile
+La transformación es aplicada a todos los datos y no puede ser limitada a una ocurrencia en específico.
+
+ Algunos caracteres tienen significado especial, como el backslash y las comillas, de modo que si se quiere especificarlos, hay que usar un backslash. Por ejemplo, para eliminar del archivo todos los backslash y reemplazar todas las comillas por underscores:
+
+ sed -e 's/\\//g' -e 's/\"/_/g' 
+
+Si hay que especificar un espacio, pueden usarse dobles comillas. Por ejemplo, para reemplazar todas las ocurrencias de "% Solo PDF" por un espacio en blanco:
+
+ sed -e 's/"% Solo PDF"/" "/g' 
+
+imprimir las primeras 8 lineas y despues solo las 2 ultimas
+ cat texto| head -n 8| tail -n 2
+ 
+ hacer operaciones
+echo $((3+2)) 
+

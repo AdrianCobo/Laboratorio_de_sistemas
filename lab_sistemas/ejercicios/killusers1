@@ -1,0 +1,168 @@
+awk
+
+Utilizando Variables
+
+Con awk puedes procesar archivos de texto. Awk asigna algunas variables para cada campo de datos encontrado:
+
+    $0 para toda la línea.
+    $1 para el primer campo.
+    $2 para el segundo campo.
+    $n para el campo enésimo campo.
+
+Los caracteres de espacio en blanco como el espacio o la tabulación es el separador por defecto entre los campos en el awk.
+
+Ahora observa este ejemplo y mira como awk lo procesa::
+
+$ awk '{print $1}' myfile
+
+El ejemplo anterior imprime la primera palabra de cada línea.
+
+Algunas veces el separador en algunos archivos no es el espacio ni la tabulación, sino algo más. Puedes especificarlo utilizando la opción – F:
+
+$ awk -F: '{print $1}' /etc/passwd
+Este comando imprime el primer campo en el archive passwd. Utilizamos los dos puntos como separador porque el archivo passwd lo utiliza.
+
+Utilizando Múltiples Comandos
+
+Para ejecutar múltiples comandos, sepáralos con un símbolo de punto y coma de la siguiente forma:
+
+$ echo "Hello Tom" | awk '{$2="Adam"; print $0}'
+El primer comando hace que el campo $2 sea equivalente a Adam. El segundo comando imprime la línea completa.
+
+Pre procesamiento Awk
+
+Si necesitas crear un título o cabecera para tu resultado. Puedes utilizar la palabra clave BEGIN para lograr esto. Esta se ejecutará antes de procesar los datos:
+
+$ awk 'BEGIN {print "Report Title"}'
+
+Vamos a aplicárselo a algo más y observemos el resultado:
+
+$ awk 'BEGIN {print "The File Contents:"}
+
+{print $0}' myfile
+
+Post Procesamiento Awk
+
+Para ejecutar un script después de procesar los datos, utiliza la palabra clave END:
+
+$ awk 'BEGIN {print "The File Contents:"}
+
+{print $0}
+
+END {print "File footer"}' myfile
+
+Variables Integradas
+
+Hemos visto que las variables de campo de datos $1, $2 $3, etc son utilizadas para extraer datos del campo, además debemos lidiar con el separador FS.
+
+Pero estas no son las únicas variables, existen más variables integradas.
+
+a continuación, en la siguiente lista se muestran algunas de las variables:
+
+FIELDWIDTHS especifica el ancho del campo.
+
+RS Especifica el separador de registros.
+
+FS Especifica un separador de campos.
+
+OFS Especifica un separador de Salidas.
+
+ORS Especifica el separador de Salidas.
+
+Por defecto, la variable OFS es el espacio, puedes establecer esta variable para que especifique el separador que necesitas:
+
+$ awk 'BEGIN{FS=":"; OFS="-"} {print $1,$6,$7}' /etc/passwd
+
+A veces, los campos son distribuidos sin un separador fijo. En estos casos, la variable FIELDWIDTHS resuelve este problema.
+
+Supongamos que tenemos este contenido:
+
+1235.96521
+
+927-8.3652
+
+36257.8157
+
+$ awk 'BEGIN{FIELDWIDTHS="3 4 3"}{print $1,$2,$3}' testfile
+
+Ahora mira la salida. Esta salida tiene 3 campos por línea y la longitud de cada campo viene dada por lo que asignamos en FIELDWIDTH.
+
+Mas Variables
+
+Existen otras variables que puede ayudarte a obtener más información:
+
+ARGC Retorna el número de parámetros pasados.
+
+ARGV Retorna los parámetros de la línea de comandos.
+
+ENVIRON Es un arreglo de las variables de ambiente del shell y sus respectivos valores.
+
+FILENAME El nombre del archive que está siendo procesado por awk.
+
+NF Cuenta los campos de la línea que está siendo procesada.(numero de campos de la linea)
+
+NR Retorna el total de registros procesados.(el numero total de lineas)
+
+FNR Con esta variable puedes acceder al registro que está siendo procesado.
+
+IGNORECASE Le dice al programa que ignore las diferencias entre mayúsculas y minúsculas.
+
+Comandos Estructurados
+
+El lenguaje de scripting awk tiene soporte de sentencias condicionales if.
+
+El archivo de prueba contiene lo siguiente:
+
+$ awk '{if ($1 > 30) print $1}' testfile
+
+Puedes utilizar variables del bash sin variables del ENVIRON así:
+
+$  echo | awk -v home=$HOME '{print "My home is " home}'
+
+Dándole Formato a una Impresión
+
+El comando printf en awk permite que imprimas con un formato de salida utilizando especificadores de formatos.
+
+Los especificadores de formatos son escritos de la siguiente forma:
+
+%[modifier]control-letter
+
+Esta lista muestra cómo se puede utilizar los especificadores de formato con printf:
+
+c Imprime salidas numéricas como una cadena de caracteres (string).
+
+d Imprime un valor entero.
+
+e Imprime números con notación científica.
+
+f Imprime valores numéricos con decimales (float).
+
+o Imprime valores en notación octal.
+
+
+s Imprime una cadena de texto.
+
+En esta sentencia utilizamos printf para darle formato a nuestra salida:
+
+hacer suma y imprimir cada resultado
+cat textnumer | awk '{var+=$2; print var}'
+
+hacer todas las sumas y al final hacer resultado
+cat textnumer | awk '{var+=$2} END {print var}'
+
+usar solo columnas con ese patron
+cat textnumer | awk  ' {if($1 ~ /j.*/) var+=$2; if($1 ~ /j.*/) tot++} END {print var/tot}'
+
+$ printf "apple apple\npineapple apple\n" | \
+awk -e 'sub(/apple/, "nut")'
+nut apple
+pinenut apple
+
+$ printf "apple apple\npineapple apple\n" | \
+
+awk -e 'gsub(/apple/, "nut")'
+nut nut
+pinenut nut
+
+controlar decimales en la salida:
+echo 100|awk '{ printf("%.2f", $1)}'

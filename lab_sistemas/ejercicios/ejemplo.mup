@@ -1,0 +1,11 @@
+Hola soy un fichero
+--pedro TXThola estoy dentro
+--pedro TXTmás texto dentro
+texto fuera--pedro TXT
+--pedro COMMENThola estoy dentro comentario
+--pedro COMMENTacaba el comentario --pedro TXT
+otro comentario
+--pedro COMMENT2hola estoy # dentro comentario
+--pedro COMMENTacaba el comentario 2
+--juan TXTotro pedro--pedro TXT
+aqui acaba el fichero

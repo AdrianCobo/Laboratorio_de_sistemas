@@ -1,0 +1,142 @@
+master: branch principal del repositorio (de trabajo o integración)
+clone: copia un repositorio diferente (puede ser remoto) a un sitio
+local
+commit: manda cambios al repositorio local (en otros VCS, checkin).
+Un commit es un conjunto de cambios que se aplican juntos.
+fetch o pull: trae cambios de un repositorio diferente (o remoto),
+fetch trae, pull hace merge además (otros VCS, update o get latest)
+push: manda cambios al repositorio diferente, (puede ser remoto)
+head: referencia al nodo con el que estamos trabajando
+branch : etiqueta de un nodo (rama de código)
+
+Puedo inspeccionar cualquier commit con la hash
+
+$ git ls-tree 50cf897
+100644 blob dbd62d94a38b78b37e85c01af443f40383ead313
+.gitignore
+100644 blob 53400f2f20189ea408c1acc9c22b1399ec4612d6
+main.go
+
+$ git cat-file -p 53400f2f20189ea408c1acc9c22b1399ec4612d6
+// hexd dumps binary files in various formats
+package main
+import (
+"fmt"
+"strings"
+"io"
+"log"
+)
+const NBytesLine=3
+//fixed for now
+func main() {
+//fake the file for now
+r := strings.NewReader("my file for now")
+buf := make([]byte, NBytesLine)
+...
+$ git show 50cf897:main.go
+#lo mismo en un paso
+git adog
+
+Sesión
+Creo un repositorio
+$ mkdir z
+$ cd z
+$ git init
+Initialized empty Git repository in /home/paurea/z/.git/
+
+Añado un fichero
+$
+$
+$
+On
+touch x.c
+git add x.c
+git status
+branch master
+No commits yet
+Changes to be committed:
+(use "git rm --cached <file>..." to unstage)
+
+Añado un fichero, paso a untracked
+$ git commit -m ’creo el primer fichero’ x.c
+[master (root-commit) 9657128] creo el primer fichero
+1 file changed, 0 insertions(+), 0 deletions(-)
+create mode 100644 x.c
+$ git status
+On branch master
+
+git log para saber los commits y demas
+
+git diff
+Antes de aplicar cambios
+Tres tipos
+Entre work y stage (git diff)
+Entre stage y repo (git diff --staged)
+Entre dos objetos (git diff sha1 sha2, ahora no lo vamos a ver)
+nothing to commit, working tree clean
+1 16:03 a
+1 16:03 b
+1 16:03 c
+
+Repositorio Bare
+No tiene directorio de trabajo (ni stage)
+Vale para los servidores, para hacer push y pull de cambios
+Por convenio el directorio acaba en .git
+$ git init --bare origen.git
+
+Hacemos un clone trabajocasa
+Veo que está apuntando a trabajocasa
+$ cd /trabajo
+$ git clone repocentral.git trabajocasa
+Cloning into ’trabajocasa’...
+warning: You appear to have cloned an empty repository.
+done.
+$ cd /trabajo/trabajocasa
+
+Hacemos un clone trabajolabo
+$ git clone repocentral.git trabajolabo
+Cloning into ’trabajocasa’...
+warning: You appear to have cloned an empty repository.
+done.
+
+Creo un commit de un fichero en trabajocasa
+$ vi tub.c
+$ git add tub.c
+$ git commit -m ’primer fichero’
+[master (root-commit) 8e1cef2] fich
+1 file changed, 5 insertions(+)
+create mode 100644 tub.c
+$ git push
+
+Traigo el cambio a trabajolabo
+$ cd /trabajo/trabajolabo
+$ git pull
+
+Creación: git branch
+Para crear una nueva branch
+La que hay por defecto es master
+No hace checkout (crear + checkout es git checkout -b)
+$
+git branch nueva
+
+hacer merge de ramas
+ir a rama master,
+merge ramauno ramados
+resolber conflicto
+hacer commit
+hacer push
+
+hacer push de una rama:
+
+git push origin nombrederama
+
+tags
+crear tag:
+git tag -a v1.4 -m 'my version 1.4'
+
+hacer push de un tag:
+$ git push origin v1.5
+$ git push origin --tags
+
+merge de dos ramas: 
+git merge master nombredelaotrarama

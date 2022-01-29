@@ -1,0 +1,1254 @@
+Directorios en GNU/Linux:
+
+/bin tiene ejecutables.
+/dev tiene dispositivos.
+/etc tiene ficheros de configuración.
+/home tiene los datos personales de los usuarios.
+/lib tiene las bibliotecas (código) que usan los programas ejecutables.
+/proc y /sys ofrecen una interfaz para interaccionar con el núcleo del sistema.
+/sbin tiene los ejecutables del sistema.
+/tmp sirve para almacenar los ficheros temporales, se borra en cada reinicio.
+/usr existe por razones históricas (tamaño de almacenamiento) y contiene gran
+parte del sistema: contiene directorios similares a los anteriores (/usr/bin o
+/usr/lib), con los datos y recursos para los programas de usuario (no del
+sistema).
+/var tiene los datos que se generan en tiempo de ejecución (cache, logs y otros
+ficheros que generan los programas).
+/boot continen los ficheros de arranque del sistema.
+/media y /mnt puntos de montaje
+/opt contiene ficheros para programas de terceros.
+
+Ruta absoluta: serie de directorios desde el raı́z separados por
+barras.
+/home/alumnos/pepe/fichero.txt
+Ruta relativa: serie de directorios desde el directorio actual.
+alumnos/pepe/fichero.txt
+Para indicar que queremos ejecutar un fichero del directorio
+actual:
+./miprograma
+
+comandos lab.sistemas:
+
+Las páginas de manual se pueden consultar con el comando
+man: man sección asunto
+Por ejemplo: man 1 gcc
+Secciones de interés: comandos (1), llamadas al sistema(2),
+llamadas a biblioteca(3).
+Para buscar sobre una palabra: apropos.
+Por ejemplo: apropos gcc.
+
+cd: cambia de directorio actual.
+echo: escribe sus argumentos por su salida.
+touch: cambia la fecha de modificación de un fichero. Si no
+existe el fichero, se crea.
+ls: lista el contenido de un directorio.
+cp: copia ficheros.
+mv: mueve ficheros.
+rm: borra ficheros.
+mkdir: crea directorios.
+rmdir: borra directorios vacı́os.
+date: muestra la fecha.Intro
+who: muestra los usuarios que están en el sistema.
+whoami: muestra tu nombre de usuario.
+sort: ordena las lı́neas de un fichero.
+wc: cuenta caracteres, palabras y lı́neas de ficheros.
+fgrep, grep: buscan cadenas dentro de ficheros.
+cmp, diff: comparan ficheros.
+cat: escribe en su salida el contenido de uno o varios ficheros.
+less: permite leer un fichero de texto en el terminal usando
+scroll.Intro
+file: da pistas sobre el contenido de un fichero.
+od: escribe en su salida el los datos de un fichero en distintos
+formatos.
+head, tail: escriben el las primeras/últimas lı́neas del
+fichero en su salida.
+tar: crea un fichero con múltiples ficheros dentro
+(comprimidos o no).
+gzip/gunzip: comprime/descomprime un fichero.
+top: muestra los procesos y el estado de sistema.
+reset: restablece el estado del terminal.
+exit: el shell termina su ejecución.
+
+Variable de shell: son locales a la shell, los programas
+ejecutados por el shell no tienen dichas variables.
+Variable de entorno: los programas ejecutados por el shell sı́
+tienen su propia copia de la variable, con el mismo valor.
+mivar=hola define la variable de shell con nombre mivar,
+cuyo valor será hola.
+$ mivar el shell sustituye eso por el valor de dicha variable (si
+no existe, lo sustituye por nada).
+export mivar exporta la variable (ahora es una variable de
+entorno).
+
+El comando set muestra todas las variables (de shell y de
+entorno).
+El comando printenv muestra las variables de entorno
+(también lo hace el comando env).
+El comado unset elimina una variable.
+Variables populares:
+$ PATH: la ruta de los programas.
+$ HOME: la ruta de tu directorio casa.
+$ USER: el nombre de usuario
+$ PWD: la ruta actual del shell
+$ LANG: configuración de localización (locales).
+$ LC xxx: otras variables de localización (locales).
+
+Globbing (wildcards): caracteres especiales para el shell que sirven
+para hacer referencia a nombres de ficheros:
+? cualquier carácter.
+* cualquier secuencia de caracteres.
+[ab] cualquiera de los caracteres que están dentro de los
+corchetes (letra a o la letra b en el ejemplo).
+[b-z] cualquier carácter que se encuentre entre esas dos (de la
+letra b a la z en el ejemplo).
+Para escribir caracteres especiales sin que haya sustitución:
+’ ’ las comillas simples escapan todo lo que tienen dentro (ya
+no tienen un significado especial).
+” ” las comillas dobles escapan todo menos algunas
+sustituciones (p. ej. las variables de entorno).
+
+↑ repite los comandos ejecutados anteriormente en la shell.
+El tabulador completa nombres de ficheros.
+Ctrl+r deja buscar comandos que ejecutamos hace tiempo.
+Ctrl+c mata el programa que se está ejecutando.
+Ctrl+z detiene el programa que se está ejecutando.
+Ctrl+d termina la entrada (o manda lo pendiente).
+Ctrl+a: mueve el cursor al principio de la lı́nea.
+Ctrl+e: mueve el cursor al final de la lı́nea.
+Ctrl+w: borra la palabra anterior en la lı́nea.
+Ctrl+u: borra desde el cursor hasta el principio de la lı́nea.
+Ctrl+k: borra desde el cursor hasta el final de la lı́nea.
+Ctrl+s: congela el terminal.
+Ctrl+q lo descongela.
+Ctrl+l: limpia el terminal.
+
+Vi:
+i pasa a modo inserción
+ESC pasa a modo comando
+En modo comando:
+:q! sale del editor sin guardar
+:x salva el fichero y sale (también se puede con :wq)
+:w salva el fichero
+:número se mueve a esa lı́nea del fichero
+i inserta antes del cursor
+a inserta después del cursor
+o inserta en una lı́nea nueva
+dd corta una lı́nea
+p pega la lı́nea cortada anteriormente
+h, j, k, l mueve el cursor a izquierda, abajo, arriba, derecha
+
+----------------------------Tema2 Instalacion y gestion de paquetes:------------------
+Comandos:
+fdisk permite manipular las particiones
+de un disco.
+parted o su interfaz gráfica gparted también
+permite manipular particiones de una forma más cómoda.
+lsb release -a
+uname -a
+apt: Mantener la instalación al dı́a:
+apt update
+apt upgrade
+do-release-upgrade -p Actualiza la distribución a una
+nueva versión (ojo, puede ser peligroso).
+ubuntu-drivers devices Paquetes recomendados de
+drivers para instalar.
+
+Ficheros .deb
+Son ficheros tipo ar (como un tar) muchos ficheros pegados
+Se puede ver con ar x f.deb (para tener uno para probar
+apt download xia dentro de un directorio).
+Dentro hay ficheros de datos (lo que se instala
+data.tar.xz), de control (control.tar.xz, dependencias),
+y scripts para ejecutar antes de instalar y al terminar.
+Los ficheros se instalan y se borran directamente on dpkg
+Normalmente nos los traeremos de la red. . . , para eso,
+apt-search, apt-get. . .
+Todo esto está recubierto por apt
+Comandos para traer e instalar ficheros de la red.
+Se bajan en /var/cache/apt/archives
+apt-cache, apt-get.
+Ahora se usa apt, recubrimiento con el mismo interfaz pero
+más rápido.
+Por ejemplo, apt-get install xia, ahora apt install
+xia.
+Se trae paquetes de un sitio en el disco o de la red.
+Un sitio en el que hay paquetes con sus distribuciones es un
+repositorio.
+Los repositorios que empiezan por deb son de binarios los de
+deb-src son de fuentes y hay remotos (https...) y locales
+(cdrom...).
+Hay una lista de respositorios en /etc/apt/sources.list y
+en los ficheros del directorio /etc/apt/sources.list.d
+Se pueden editar los ficheros, o si es un repo de terceros (ppa,
+Personal Package Archive), es cómodo añadirlos con
+add-apt-repository, por ejemplo, add-apt-repository
+ppa:libreoffice/ppa
+
+apt update se baja la lista de paquetes del repositorio.
+Los nombres de los paquetes en apt son de más alto nivel:
+apt install xia vs. dpkg -i xia 2.2-3 all.deb
+apt search regexp busca el paquete cuya descripción
+coincide con regexp (expresiones regulares, patrones de texto,
+veremos mas adelante en profundidad)
+apt install bla instala el paquete bla.
+apt remove paquete desinstala el paquete (en local se
+podrı́a hacer con dpkg si supiese el nombre concreto del
+fichero).
+
+apt upgrade actualiza los paquetes.
+apt autoremove borra los paquetes que no ha instalado el
+usuario y que ya no están en las dependencias de paquetes
+instalados.
+apt clean libera espacio, por ejemplo, borra
+/var/cache/apt/archives/*
+
+Para ver a qué paquete ya instalado pertenece un fichero
+ejecutamos dpkg -S fichero
+Para buscar qué paquete del repositorio contiene un fichero
+apt-file search fichero.
+
+--------------------Tema 3: Arranque del sistema.---------------------------------
+
+A continuación describiremos el proceso de arranque de una
+máquina Ubuntu GNU/Linux en Intel 64-bit.
+La secuencia es:
+1 Firmware
+2 Cargador primario
+3 Cargadores secundarios
+4 Kernel
+5 Área de usuario (init)
+
+El comando de Linux
+efibootmgr -v
+muestra las variables de UEFI(Firmware actual, antes se usaba BIOS). La variable BootOrder indica
+el orden de las aplicaciones EFI (cada una con su dispositivo y
+ruta). Ese comando también permite modificar las variables,
+borrar entradas, etc. (cuidado!).
+
+Pulsando Esc cuando carga GRUB(grub es el kargador de linux) podemos acceder al menú
+de GRUB (si estamos con BIOS, presionando Shift).
+Podremos activar el intérprete de comandos de GRUB para
+realizar operaciones avanzadas, pasar parámetros al kernel,
+etc.
+
+Kernel(imagen de linux/sistema operativo)
+Se empiezan a crear procesos entre otras cosas:
+PID 0: cpu idle. Su función es ejecutar cuando no hay nada
+que hacer.
+PID 1: init. Lo veremos más tarde.
+PID 2: kthreadd. Gestionará la creación de hilos del kernel.
+Y se activan el resto de las CPUs.
+
+Initrd (Initial RAM Disk) es un sistema de ficheros que se usa
+para poder arrancar el sistema completo. Actualmente, se usa
+initramfs, que usa el driver tmpfs 1 .
+Se monta en el raı́z de forma temporal
+
+Todo ese sistema de ficheros está en un fichero
+/boot/initrd.img-*. Si quieres extraer a mano uno y ver
+qué lleva, usa el comando unmkinitramfs.
+Una vez montado el initrd en / , el proceso con PID 1:
+1)Ejecuta el script /init para montar sysfs y procfs, crear
+distintas variables de entorno, ejecutar otros scripts de
+arranque, cargar módulos necesarios, volúmenes lógicos (LVM),
+etc.
+2)Ejecuta /sbin/run-init para montar el raı́z de verdad y eliminar de la memoria el intird
+3)Ejecuta /sbin/init (del raı́z de verdad).
+
+El proceso con PID 1 quedará ejecutando el programa /sbin/init
+hasta que se apague la máquina.
+En la mayorı́a de distribuciones Linux actuales, init es
+systemd. Nos centraremos en este.
+En otras, es System V init (sysvinit).
+
+systemd es mucho más que un init. Es una colección de demonios,
+bibliotecas, programas y componentes del núcleo. Hace muchas
+cosas extra que antes hacı́an otros demonios
+
+Maneja el concepto de unit.
+Un tipo de unit es cualquier cosa que puede manejar systemd.
+Cada cosa concreta es una unit.
+Una unit se puede activar o desactivar. Activar significa
+arrancar, realizar, montar, vincular, etc. Depende del tipo de
+unit.
+
+Existen muchos tipos, p. ej.:
+Service units: controlan los servicios (demonios).
+Mount units: controlan los sistemas de ficheros.
+Target units: controlan otras units.
+Path units: vigilan rutas para reaccionar si cambian
+ficheros/directorios.
+
+Unas units dependen de otras. Los tipos básicos de dependencia
+son:
+Requires: es estricta, se activará y si falla la activación de la
+dependencia, no se puede activar esta unit.
+Wants: se intentará activar la dependencia, pero si falla no
+importa.
+Requisite: debe estar activa ya, si no lo está, falla la
+activación de esta unit.
+Conflicts: si está activa, se desactivará, no es compatible
+con esta unit.
+
+Para indicar orden, se pueden usar estos modificadores:
+Before: esta unit se activará antes de las units indicadas.
+After: se activará después de las indicadas.
+También se pueden poner condiciones. Por ejemplo:
+ConditionPathExists=p: si el fichero p existe, se activa.
+ConditionPathIsDirectory=p: si existe y es directorio.
+
+En un sistema de escritorio, lo último que se arranca es el
+entorno gráfico.
+Suele arancarse un programa que es la pantalla gráfica de
+login (como gdm o sddm) y este arranca el sistema de
+ventanas X windows (xorg) que a su vez ejecuta una sesión
+con el manejador de ventanas, menús, etc. (unity-session,
+gnome-session o lxsession)
+Las X (Xorg) se pueden arrancar también a mano con startx
+desde una consola de texto, y puede haber varias arrancadas
+(Ctrl-Alt-F1, Ctrl-Alt-F2. . . . conmuta entre consolas de texto
+o gráficas).
+Mira las páginas de manual de los programas en negrita en
+esta transparencia, en particular xorg.
+comandos:
+Comandos (hay que ejecutarlos como root):
+systemctl: comando que permite controlar y dar órdenes a systemd.
+systemd-analyze: comando que permite analizar y depurar systemd.
+
+Las units están definidas por ficheros, cuyo nombre es
+nombre-de-unidad.tipo.
+Son ficheros de texto plano.
+Este comando nos da la ruta donde se instalan. Esos ficheros
+no se deben modificar:
+pkg-config systemd
+--variable=systemdsystemunitdir
+Por omisión es:
+/lib/systemd/system
+Las de usuario deben estar en el directorio que muestre este
+comando:
+pkg-config systemd
+--variable=systemduserunitdir
+
+Para indicar orden, se pueden usar estos modificadores:
+Before: esta unit se activará antes de las units indicadas.
+After: se activará después de las indicadas.
+También se pueden poner condiciones. Por ejemplo:
+ConditionPathExists=p: si el fichero p existe, se activa.
+ConditionPathIsDirectory=p: si existe y es directorio.
+
+systemctl start nombre-de-unit
+Ası́ se arranca un servicio.
+Si en lugar de start ponemos stop, se está parando el
+servicio.
+Si ponemos restart, se está reiniciando el servicio (por
+ejemplo para que recargue su configuración). Algunos servicios
+entienden también reload para recargar su configuración.
+
+systemctl enable nombre-de-unit
+Ası́ se habilita un servicio: se arrancará automáticamente
+cuando se inicie el sistema. No se arrancará ahora.
+Si en lugar de enable ponemos disable, se está
+deshabilitando el servicio.
+Se puede arrancar manualmente una unit que está
+deshabilitada.
+
+systemctl status nombre-de-unit
+Ası́ se comprueba el estado de un servicio.
+Se mostrará un resumen del servicio, desde cuándo lleva
+arrancado, cuál es su fichero, información sobre sus procesos,
+las últimas lı́neas de su bitácora...
+
+systemctl list-units
+Muestra todas las units activas.
+Se mostrarán columnas con el nombre de la unidad, si su
+configuración está cargada en su memoria, si está activa (se
+arrancó bien) y una descripción.
+Con el modificador --all nos muestra todas las units (activas
+e inactivas).
+Con el modificador --state=estado nos muestra las units
+con ese estado.
+
+systemctl list-unit-files
+Muestra todas los ficheros de las units.
+static indica que dicha unit no puede ser habilitada, porque
+es una unit que simplemente realiza una acción, normalmente
+como dependencia de otra unit.
+masked indica que no se permite arrancarl
+
+systemctl show nombre-de-unit
+Muestra las propiedades de la unit.
+
+systemctl list-dependencies nombre-de-unit
+Muestra las dependencias de la unit (Required o Wanted).
+Con el modificador --all lo hace recursivamente.
+Con el modificador --reverse muestra las units que
+dependen de esta unit.
+
+systemctl edit --full nombre-de-unit
+Sirve para editar el fichero de la unit.
+Cuando se termina la edición, se escribe el fichero de la unit
+en /etc/systemd/system, que es el directorio con más
+precedencia para las units.
+Evidentemente, debemos saber bien lo que hacemos.
+
+systemctl daemon-reload
+Recarga systemd.
+
+systemctl halt
+Apaga el sistema.
+Con poweroff hace un apagado total.
+Con rescue pone el sistema en modo single-user para
+recuperación.
+
+El runlevel es un concepto de System V. Describe una
+configuración del sistema para un modo de operación.
+Cuando se activa un runlevel, se paran todos los servicios que
+no hacen falta y se activan los que si hacen falta.
+systemd lo hace con sus targets.
+
+Los comandos equivalentes son:
+runlevel 0: apagar → systemctl poweroff
+runlevel 1: single-user → systemctl rescue
+runlevels 2,3,4: multi-user → systemctl isolate multi-user.target
+runlevel 5: multi-user con entorno gráfico → systemctl isolate grafical.target
+runlevel 6: reinicio → systemctl reboot
+
+En un sistema de escritorio, lo último que se arranca es el
+entorno gráfico.
+Suele arancarse un programa que es la pantalla gráfica de
+login (como gdm o sddm) y este arranca el sistema de
+ventanas X windows (xorg) que a su vez ejecuta una sesión
+con el manejador de ventanas, menús, etc. (unity-session,
+gnome-session o lxsession)
+Las X (Xorg) se pueden arrancar también a mano con startx
+desde una consola de texto, y puede haber varias arrancadas
+(Ctrl-Alt-F1, Ctrl-Alt-F2. . . . conmuta entre consolas de texto
+o gráficas).
+
+-------------------------Tema 4 Gestión de usuarios y permisos--------------------
+
+En un sistema de tipo Unix tenemos usuarios y grupos.
+Los usuarios pertenecen a grupos.
+paurea@alpha01:~$ whoami
+paurea
+paurea@alpha01:~$ id
+uid=5012(paurea) gid=600(profes) groups=600(profes),20(dialout),201(android),202(kvm),205(docker)
+
+El fichero /etc/passwd
+Es un fichero de texto con la traducción entre nombres y uids(user id)
+de usuarios
+Contiene más información
+paurea@alpha01:~$ cat /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+pulse:x:115:122:PulseAudio daemon,,,:/var/run/pulse:/usr/sbin/nologin
+paurea:x:1000:1001:Gorka Guardiola:/home/paurea:/bin/bash
+
+El fichero /etc/shadow
+Para evitar que cualquiera tenga acceso a la hash del
+password.
+Se mete en otro fichero sin permisos de lectura para todos.
+/etc/shadow.
+Este fichero también está separado por dos puntos.
+El segundo campo es la hash de la password, y puede estar en
+distintos formatos.
+Contiene fechas de cambio de passwords, cuando expiran. . .
+Una cuenta desactivada tiene como contraseña una
+admiración (!).
+Ver shadow(5).
+El UID 0 y GID 0 es especial.
+Es el superusuario, que se llama root.
+Tiene permisos para todo.
+
+El fichero /etc/group
+Separados por dos puntos
+Nombre del grupo.
+Password del grupo (no se usa).
+Número que identifica al grupo, gid.
+Lista de nombres de usuarios separados por comas que
+pertenecen al grupo (aparte de los que lo tienen como grupo
+primario el fichero /etc/passwd)
+paurea@alpha01:~$ cat /etc/group
+root:x:0:
+daemon:x:1:
+bin:x:2:
+sys:x:3:
+sudo:x:27:paurea
+audio:x:29:pulse,paurea
+
+los grupos sirver para dar permisos a usuarios a usar servicios.
+Se les suele añadir al grupo (por ejemplo, audio).
+
+PAM
+Lo que hemos visto hasta ahora, no suficientemente flexible.
+Por ejemplo, varias máquinas comparten cuentas (LDAP) o
+queremos usar tarjetas para autenticación.
+Utiliza un sistema con módulos cargables (librerı́as dinámicas)
+sofisticado.
+man 5 pam.
+Para ver módulos, buscar con man -k pam (el subrayado al
+final).
+Ver /etc/pam.d ficheros de configuración.
+
+Comandos
+Casi nunca se editan los fichero a mano.
+Para cambiar el password de un usuario: passwd username.
+Para añadir un usuario (o borrarlo) adduser username
+(deluser username).
+El comando adduser sirve tambien para añadir o eliminar un
+usuario de un grupo. Para añadir un usuario adduser
+username groupname y para borrarlo deluser username
+groupname
+Para crear un nuevo grupo (o borrarlo) addgroup groupname
+(delgroup groupname).
+
+Credenciales
+Un proceso tiene credenciales 1 :
+PID: identificador de proceso.
+UID: identificador de usuario.
+GID: identificador de grupo.
+EUID: identificador de usuario efectivo, el que se usa para
+comprobar privilegios.
+EGID: identificador de grupo efectivo, el que se usa para
+comprobar privilegios.
+
+Control de credenciales
+/bin/id: Permite ver tu UID y GID.
+/bin/su: Permite ejecutar un shell con otro UID. Por
+omisión, intenta ejecutar un shell con UID 0.
+/usr/bin/sudo: Permite ejecutar un comando con otro UID,
+proporcionando tu propia contraseña. El fichero
+/etc/sudoers especifica quién puede convertirse en quién, y
+para qué. Ese fichero se puede editar con el comando visudo,
+nunca hay que hacerlo con otro editor. Mucho cuidado.
+
+Ejemplo de sudoers (I):
+jose ALL = (root, bin : operator, system) ALL
+jose puede, en cualquier máquina
+adquirir el UID de root y bin
+adquirir el GID de operator y system
+para ejecutar cualquier comando
+
+Ejemplo de sudoers (II):
+ramon mono = NOPASSWD: /bin/kill, PASSWD: /bin/ls,
+/usr/bin/lprm
+ramon puede, en la máquina mono
+adquirir el UID de root
+para ejecutar kill sin proporcionar contraseña
+para ejecutar ls y lprm proporcionando contraseña
+
+Permisos POSIX
+Se establecen esos permisos para:
+dueño.
+grupo.
+resto de usuarios.
+rwx rwx rwx
+Tipo de acceso:
+r: permiso de lectura. En directorio: se pueden leer las entradas de directorio.
+w: permiso de escritura. En directorio: se pueden escribir las entradas del
+directorio (borrar, renombrar, añadir ficheros).
+x: permiso de ejecución. En directorios: se puede entrar o atravesar el directorio
+cuando se evalúa una ruta. Es necesario para acceder a un fichero del directorio
+(datos y metadatos).
+
+Los permisos se representan normalmente en octal:
+P. ej: 0664 es 110 para el dueño, 110 para el grupo, 100 para
+el resto.
+Hay otros permisos
+sticky bit (+t): es para directorios: no puedes borrar una
+entrada si no eres el dueño del directorio, del fichero/directorio
+que representa la entrada, o root (se usa en /tmp)
+setuid/setgid bit (+s): el proceso que ejecute el fichero
+adoptará el UID/GID efectivo del dueño/grupo del fichero (en
+linux se ignora para interpretados).
+Podemos ver los permisos con el comando ls -l. Si los
+queremos ver del directorio y no de las entradas: -d.
+
+El comando chmod cambia los permisos de un fichero. Solo lo
+puede hacer el dueño del fichero y root.
+Inicialmente, el creador de un fichero es su dueño y grupo.
+El comando chown cambia el dueño de un fichero. Hay que
+tener privilegios especiales para hacer esto.
+El comando chgrp cambia el grupo de un fichero. El dueño
+puede cambiarlo a un grupo al que él pertenezca.
+OJO: en Linux los permisos POSIX conviven con otros permisos
+más potentes llamados ACLs. man 5 acl.
+
+Dos maneras de usar chmod
+En octal: chmod 0777, rwx para todos.
+Con letras chmod g+x da permiso de ejecución al grupo.
+Con letras chmod u+x da permiso de ejecución al usuario.
+Puede ser u user, g grupo, o el resto o nada (para todos, igual
+que a).
+Y recursivamente (todos los ficheros y directorios del árbol)
+chmod -R g-rwx directorio.
+
+Para cambiar simultáneamente usuario y grupo
+chown paurea:audio ruido.mp3
+
+---------------------------------Tema 5 Shell scripting------------------------------
+
+Número mágico
+Tradicionalmente, los primeros bytes de un fichero
+(normalmente 2 o más), identifican el tipo de fichero (no el
+nombre).
+Una de las cosas que mira el comando file.
+Por ejemplo, JPEG empieza por 0xFF 0xD8.
+
+Hash bang: #!
+En particular los ejecutables, si empiezan por los dos
+caracteres ASCII #! (0x23 0x21) son interpretados.
+Eso significa que hay un comando externo que interpreta el
+fichero.
+Se ejecuta el comando con el fichero como último parámetro.
+Esto lo usa, Python, los scripts de shell. . .
+$ cat hh
+#!/bin/echo --
+esto da igual
+$ chmod +x hh
+$ ./hh
+-- ./hh
+
+Scripts de shell
+Son programas interpretados mediante el mecanismo hash
+bang que usan la shell como intérprete.
+Para depurar, se puede poner -x como parámetro para que la
+shell escriba el comando antes de ejecutarlo.
+#!/bin/sh -x
+echo hola mundo
+pwd
+exit 0
+
+Un script:
+Tiene que tener permisos de ejecución.
+Hay comandos que se implementan dentro del shell (no se
+ejecuta un fichero externo al shell, es una parte del propio
+shell). Se llaman built-in.
+El comando built-in exit sale del script con el status indicado
+en su argumento.
+Si un script no sale con exit, deja el status que tiene $ ?.
+#!/bin/sh
+# este es un hola mundo en sh
+# esto es un comentario
+echo hello world
+exit 0
+
+Ejecución de una lı́nea de shell
+Pasos:
+1 Lee la lı́nea, tokeniza
+2 Hace sustituciones (variables, globbing, etc)
+3 Abre ficheros de redirecciones
+4 Ejecuta los comandos
+
+Variables
+Se definen con el built-in infijo =.
+Definirlas las cambia en la shell, pero no las exporta a los
+hijos.
+Es importante recordar que la sustitución la hace la shell.
+$ x=bla
+$ echo $x
+bla
+$ touch c d e
+$ ls
+c d e
+$ cmd=ls
+$ $cmd
+c d e
+$
+
+Forman parte del entorno.
+El entorno lo hereda el proceso del padre.
+El comando built-in export sirve para meter a una variable en
+el entorno y que se herede.
+$ hola=bla
+$ echo $hola
+bla
+$ bash -c ’echo $hola’
+$ export hola
+$ bash -c ’echo $hola’
+bla
+$
+
+Entrada estándar, salida estándar
+En Unix, los ficheros abiertos de un proceso están numerados
+(File Descriptor, FD o descriptor de fichero), cada vez que
+abro uno para usarlo: un número.
+Hay tres que vienen abiertos por defecto entrada y salida
+estándar y de error, 0 (stdin), 1 (stdout), 2 (stderr).
+Por defecto es la consola la que viene abierta en esos
+descriptores (cuando ejecutamos un shell).
+
+Stdin es de donde lee datos por defecto el programa (entrada
+estándar).
+Stdout es dónde escribe datos (salida estándar).
+Stderr es dónde escribe mensajes de error (salida de error).
+Este sistema permite mandar la salida de un comando a un
+fichero o leer de él o conectar varios comandos.
+Stderr permite escribir en la salida mensajes de error sin
+interferir con los datos.
+
+Redirecciones
+man 1 bash, ver la sección REDIRECTION
+’<’ y ’>’ abren los ficheros (y crean el de salida si hace falta)
+Y los dejan en la entrada estándar y salida estándar (0 y 1)
+$ wc -l < /etc/os-release >/dev/null
+*/dev/null es un sumidero que no almacena nada, es como un agujero negro
+
+Para redireccionar la salida de error ’2 >’ (en general, para
+entrada o salida con un número delante, se redirecciona ese
+descriptor de fichero p. ej. ’5 <’ )
+$ ls /noexiste 2> errores
+$ cat errores
+ls: cannot access ’/noexiste’: No such file or directory
+$
+
+’>>’ hace lo mismo que ’>’
+Pero append (añade al final), mientras que ’>’ trunca el
+fichero.
+$ wc -l < /etc/os-release >>/dev/null
+
+ismo fichero:
+$ ls /noexiste > fich 2>&1
+$ cat fich
+ls: cannot access ’/noexiste’: No such file or directory
+$
+Escribir algo por la salida de error de un script:
+echo aaa 1>&2
+
+’>’ trunca el fichero antes de ejecutar el comando.
+Recordar el orden en el que hace las cosas las shell.
+Puedo acabar con el fichero vacı́o.
+$ clear
+$ echo aaaaaaa > bla
+$ cat bla
+aaaaaaa
+$ cat bla > bla
+$ cat bla
+$
+
+**$ cat bla >> bla no se puede hacer pues haría un bucle infinito
+
+Hemos visto:
+| es un pipe
+& ejecuta un comando en background
+$ se usa para las variables. $ var es lo mismo que $ {var}
+” y ’ se usan para escapar cadenas (las dobles expanden
+algunas cosas)
+< , < y >> son redirecciones
+5> para redirigir el fd 5
+5>&3 para redirigir duplicando el fd 3 en el 5.
+Cuando hay varios el orden importa ej: 2>&1 >/dev/null
+\ se usa para escapar caracteres
+&& , || para ejecución condicional
+Globbing (wildcards): ? * [a − z] etc.
+
+Parámetros posicionales
+Se pueden acceder a los parámetros que se han pasado al
+script con $ 1, $ 2, $ 3 ...
+$ 0 expande al nombre con el que se ha invocado el script.
+$ # expande al número de parámetros (sin contar el 0).
+$ * expande a los parámetros posicionales.
+” $ *” expande a ” $ 1 $ 2 ...”
+$ @ expande a los parámetros posicionales (igual que $ * pero
+separados)
+” $ @” expande a ” $ 1” ” $ 2” ...
+shift desplaza los parámetros (p. ej. $ 4 pasará a ser $ 3). Se
+actualiza el valor de $ #.
+Útil para parámetros optativos (pongo lo que sea, o hago shift,
+el resto igual)
+
+Agrupaciones
+Si queremos ejecutar comandos en un subshell:
+( comando; comando; ... )
+Si queremos ejecutar una agrupación de comandos en el shell
+actual:
+{ comando; comando; ... }
+Ejemplo:
+$ { echo uno; echo dos; } | tr o O
+unO
+dOs
+$ { echo los ficheros de /tmp son; ls /tmp; } > ficheros
+
+Here documents
+A un programa que lee de su entrada.
+Se le pasa un trozo de texto que se hace pasar por un fichero
+en su entrada estándar.
+Desde ’<<MARCA’ hasta una lı́nea que tiene ’MARCA’
+$ cat <<BLA
+soy un
+here document
+BLA
+soy un
+here document
+
+Sustitución de comando
+Se sustituye el comando por su salida.
+Se puede escribir de dos formas:
+$ (comando)
+‘comando‘
+$ l=$(wc -l /tmp/a | cut -d’ ’ -f1)
+$ echo $l
+31
+
+if
+Las condiciones depende del status de salida del comando: éxito es
+verdadero, fallo es falso.
+if comando
+then
+    comandos
+elif comando
+then
+    comandos
+else
+    comandos
+fi
+
+Se puede negar la condición del resultado de un comando con la
+admiración.
+if ! comando
+then
+comandos
+fi
+
+case
+Los casos pueden contener patrones de globbing.
+case palabra in
+patrón1)
+comandos
+;;
+patrón2 | patrón3)
+comandos
+;;
+*)
+# este es el default
+comandos
+;;
+esac
+
+Bucles
+while comando
+do
+comandos
+done
+for variable in palabra1 palabra2 palabraN
+do
+comandos
+done
+
+Read
+El comando read lee una lı́nea de su entrada estándar y la
+guarda en la variable que se le pasa como argumento.
+Se puede usar para procesar la entrada lı́nea a lı́nea en un
+bucle.
+Solo debemos hacer eso cuando no tenemos ningún filtro o
+pipeline que nos sirva para hacer lo que queremos.
+
+Por ejemplo, esto itera 2 veces:
+echo ’a b
+c d’ > /tmp/e
+while read line
+do
+echo $line
+done < /tmp/e
+Esto itera 4 veces:
+for x in ‘cat /tmp/e‘
+do
+echo $x
+done
+
+Funciones
+Se pueden definir funciones. Se accede a sus parámetros como
+a los parámetros posicionales.
+Se llama como un comando
+Por ejemplo:
+hello () {
+echo hola $1
+shift
+echo adios $1
+}
+...
+# ejecutamos la función
+$ hello uno dos
+hola uno
+adios dos
+
+Alias
+Similar a funciones.
+Sin argumentos, alias muestra los que hay definidos.
+Para la lı́nea de comandos
+$ alias hmundo=’echo hola mundo’
+$ hmundo
+hola mundo
+$ unalias hmundo
+$ hmundo
+hmundo: command not found
+$ alias
+alias la=’ls -A’
+alias ll=’ls -alF’
+alias ls=’ls --color=auto’
+
+Test
+El comando test sirve para comprobar condiciones de distinto
+tipo.
+Ficheros:
+-f fichero
+si existe el fichero
+-d dir
+si existe el directorio
+Cadenas:
+-n String1
+si la longitud de la string no es cero
+-z String1
+si la longitud de la string es cero
+String1 = String2
+si son iguales
+String1 != String2
+String1 and String2 variables no son idénticas
+String1
+si la string no es nula
+
+Enteros:
+Integer1 -eq Integer2
+si los enteros Integer1 e Integer2 son iguales.
+Otros operadores:
+-ne: not equal
+-gt: greater than
+-ge: greater or equal
+-lt: less than
+-le: less or equal
+
+Test también se puede usar ası́:
+Esto:
+[
+$ a -eq $ b
+]
+es lo mismo que esto:
+test $ a -eq $ b
+
+Operaciones aritméticas
+Para operaciones básicas con enteros podemos usar el propio shell.
+También podemos usar el comando bc.
+Esto:
+$ ((5 + 7))
+se reemplaza por
+12
+
+Filtros útiles
+sort
+ordena las lı́neas de varias formas.
+uniq
+elimina lı́neas contiguas repetidas.
+tail
+muestra las últimas lı́neas.
+P. ej:
+$ ps | tail +3
+$ ps | tail -3
+$ seq 1 1000 |
+$ seq 1 1000 |
+# a partir de la 3 a
+# las 3 ultimas
+sort
+sort -n
+
+Sort
+Puede recibir una lista de columnas (empezando por la 1)
+Y un separador
+Y ordena por esos campos como clave (es un intervalo de
+campos)
+Ojo con estabilidad (-s)
+$ cat x.txt
+1-2-4
+2-3-3
+2-2-1
+2-1-4
+$ sort -k2,2 -t\- x.txt
+2-1-4
+2-2-1
+1-2-4
+2-3-3
+$ sort -k1,2 -t\- x.txt
+1-2-4
+2-1-4
+2-2-1
+2-3-3
+
+diff
+compara ficheros de texto lı́nea a lı́nea
+cmp
+compara ficheros binarios byte a byte
+P. ej:
+$ diff fich1 fich2
+$ cmp fich1 fich2
+
+Tr
+Traduce caracteres. El primer argumento es el conjunto de
+caracteres a traducir. El segundo es el conjunto al que se
+traducen. El enésimo carácter del primer conjunto se traduce
+por el enésimo carácter del segundo.
+-d
+Borra los caracteres del único conjunto que se le pasa como
+argumento.
+Se le pueden dar rangos, p. ej.
+$ cat fichero | tr a-z A-Z
+
+Expresiones regulares (regexp)
+Es un lenguaje formal para describir/buscar cadenas de
+caracteres.
+Parecidas a los patrones de la Shell o de globbing, pero más
+potentes.
+Veremos las que se llaman extended regular expressions. Es un
+estádar de POSIX.
+Una string encaja con sı́ misma, por ejemplo ’a’ con ’a’.
+
+.
+encaja con cualquier carácter, por ejemplo ’a’.
+[conjunto]
+encaja con cualquier carácter en el conjunto, por ejemplo
+[abc] encaja con ’a’. Se pueden especificar rangos, p. ej.
+[a-zA-Z].
+[ˆconjunto]
+encaja con cualquier carácter que no esté en el conjunto, por
+ejemplo [ˆabc] NO encaja con ’a’, sin embargo sı́ encaja
+con ’z’.
+
+ˆ
+encaja con principio de lı́nea.
+$
+encaja con final de lı́nea.
+Una regexp e 1 concatenada a otra regexp e 2 , e 1 e 2 , encaja con
+una string si una parte p 1 de la string encaja con e 1 y otra
+parte contigua, p 2 , encaja con e 2 .
+P. ej:
+’az’ encaja con la regexp [a-d]z
+
+exp*
+encaja si aparece cero o más veces la regexp que lo precede.
+exp+
+encaja si aparece una o más veces la regexp que lo precede.
+P. ej:
+’aaa’ encaja con la regexp a*
+’baaa’ encaja con la regexp ba+
+’bb’ encaja con la regexp ba*
+’bb’ no encaja con la regexp ba+
+
+exp?
+encaja si aparece cero o una vez la regexp que lo precede. Se
+utiliza para partes opcionales.
+(exp)
+agrupa expresiones regulares.
+P. ej:
+’az’, ’av’, ’a’ encajan con la regexp az?
+’abab’ encaja con la regexp (ab)+
+’abab’, ’ababab’, ’ababababa’ encajan con la regexp (ab)+
+
+exp | exp
+si encaja con alguna de las regexp que están separadas por la
+barras
+\
+carácter de escape: hace que el sı́mbolo pierda su significado
+especial.
+P. ej:
+’aass’ encaja con la regexp (aass|booo)
+’hola*’ encaja con la regexp a\*
+
+Egrep
+Filtra lı́neas usando expresiones regulares.
+-v
+Realiza lo inverso: imprime las lı́neas que no encajan.
+-n
+Indica el número de lı́nea.
+-e
+indica que el siguiente argumento es una expresión.
+-q
+silencioso, no saca nada por la salida (cuando solo nos
+interesa el status de salida).
+
+Sed
+Stream Editor
+Editor de flujos de texto con comandos.
+Basado en Ed (editor con comandos, tatarabuelo de vi).
+Muchas de las cosas de sed, igual en ed.
+
+Es un editor: aplica el comando de sed a cada lı́nea que lee y
+escribe el resultado por su salida. Sin el modificador -n,
+escribe todas las lı́neas después de procesarlas.
+Si queremos usar expresiones regulares extendidas, hay que
+usar la opción -E.
+Comandos:
+q → Sale del programa.
+d → Borra la lı́nea.
+p → Imprime la lı́nea. (correr con -n)
+r → Lee e inserta un fichero.
+s → Sustituye. ← la que más se usa!!!
+
+Direcciones:
+número → actúa sobre esa lı́nea.
+/regexp/ → lı́neas que encajan con la regexp.
+$ → la última lı́nea.
+Se pueden usar intervalos:
+número,número → actúa en ese intervalo.
+número, $ → desde la lı́nea número hasta la última.
+número,/regexp/ → desde la lı́nea número hasta la primera
+que encaje con regexp.
+
+Ejemplos:
+sed -E ’3,6d’ → borra las lı́neas de la 3 a la 6
+sed -E -n ’/BEGIN|begin/,/END|end/p’ → imprime las
+lı́neas entre esas regexp
+sed -E ’3q’ → imprime las 3 primeras lı́neas.
+sed -E -n ’13, $ p’ → imprime desde la lı́nea 13 hasta la última.
+sed -E ’/[Hh]ola/d’ → borra las lı́neas que contienen ’Hola’ u
+’hola’.
+
+Sustitución
+sed -E ’s/regexp/sustitución/’ → sustituye la primero
+subcadena que encaja con la exp. por la cadena sustitución.
+sed -E ’s/regexp/sustitución/g’ → sustituye todas
+las subcadenas de la lı́nea que encajan con la exp. por la
+cadena sustitución.
+sed -E ’s/(reg)reg(reg).../ \1 sustitución\2/g’
+→ usa las subcadenas que encajaron con las agrupaciones (los
+paréntesis en orden de apertura) en la cadena de sustitución.
+Se llaman referencias hacia atrás o backreferences.
+
+AWK
+Lenguaje completo de programación de texto.
+Útil, veremos sólo la superficie.
+Al Aho, Peter Weinberger, Brian Kernighan.
+Se pueden escribir scripts con AWK como intérprete en el
+hash bang.
+
+AWK
+Lee lı́neas y ejecuta el programa para cada una de ellas.
+No imprime por omisión las lı́neas que lee.
+Es muy potente, veremos su uso más habitual: imprimir.
+
+Imprimir:
+print
+Sentencia que imprime los operandos. Si se separan con
+comas, inserta un espacio. Al final imprime un salto de lı́nea.
+printf()
+Función que imprime, ofrece control sobre el formato de forma
+similar a la función de libc para C:
+$ ls -l | awk ’{ printf("Size: %08d KBytes\n", $ 5) }’
+
+Variables:
+$ 0
+La lı́nea que está procesando.
+$ 1, $ 2 ...
+El primer, segundo... campo de la lı́nea.
+NR
+Número del registro (lı́nea) que se está procesando.
+Ejemplo
+para imprimir la tercera y segunda columna de un csv:
+$ cat a.txt|awk -F, ’{printf("%d %d",$3, $2)}’
+
+Variables:
+NF
+Número del campos del registro que se está procesando.
+var=contenido
+Se pueden declarar variables dentro del programa. Con el
+modificador -v se pueden pasar variables al programa.
+$ ls -l | awk ’
+{
+size= $ 5 ; printf("Size: %08d KBytes\n", size)
+}’
+
+patrón { programa }
+Actuando sólo en unas lı́neas, que se ajustan a un patrón, que
+puede ser:
+Expresión regular
+Se procesan las lı́neas que encajen con la regexp.
+$ ls -l | awk ’/[Dd]esktop/{ print $ 1 }’
+$ ls -l | awk ’ $ 1 ~
+/[Dd]esktop/ { print $ 1 }’
+
+Expresión de relación
+Se comparan valores y se evalúa la expresión.
+$ ls -l | awk ’ NR >= 5 && NR <= 10 { print $ 1 }’
+
+Inicialización y finalización:
+BEGIN{
+...
+}
+patrón{
+...
+}
+END{
+...
+}
+
+next: pasar a la siguiente regla
+
+Arrays asociativos:
+Son cómodos.
+Por ejemplo, para imprimir cuantos procesos tiene ejecutando
+cada usuario en el sistema:
+$
+ps aux | awk ’{dups[$1]++} END{for (user in dups) {print user,dups[user]}}’
+
+Para recorrese un árbol de ficheros
+du -a .
+find .
+
+Join
+join
+Extremadamente útil
+Hace un join relacional de dos columnas (tienen que estar
+ordenadas)
+$ echo ’
+a bla
+b ble
+c blo’ > a.txt
+$ echo ’
+a ta
+b te
+c to’ > b.txt
+$ join a.txt b.txt
+a bla ta
+b ble te
+c blo to
+
+join quita las que no están en alguno de los dos (inner join)
+Tienen que estar ordenadas, usar sort antes
+Igual que sort puede usar diferentes campos
+
+Xargs
+Sirve para usar como argumentos en la ejecución de otro
+comando lo que viene por la entrada estándar.
+$ echo a b c | xargs ls -l
+-rw-rw-r-- 1 esoriano esoriano 2 mar 1 16:03 a
+-rw-rw-r-- 1 esoriano esoriano 2 mar 1 16:03 b
+-rw-rw-r-- 1 esoriano esoriano 2 mar 1 16:03 c
+
+Comandos texto
+cut y paste
+Mejor dominar awk (se puede hacer todo)
+Ejemplos:
+$ echo uno dos tres | cut -d’ ’ -f 1,3
+uno tres
+$ ps | sed 3q > a
+$ seq 1 3 > b
+$ paste a b
+PID TTY
+TIME CMD
+1
+8462 pts/4
+00:00:00 bash
+2
+11357 pts/4
+00:00:00 ps
+3
+$ paste b a
+1
+PID TTY
+TIME CMD
+2
+8462 pts/4
+00:00:00 bash
+
+
+3
+11357 pts/4
+00:00:00 ps

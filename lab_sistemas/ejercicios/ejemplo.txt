@@ -1,0 +1,6 @@
+hola estoy dentro
+más texto dentro
+#hola estoy dentro comentario#
+#acaba el comentario --pedro TXT#
+#2hola estoy # dentro comentario#
+#acaba el comentario 2#
